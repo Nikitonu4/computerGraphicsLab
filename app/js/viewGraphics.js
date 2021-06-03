@@ -1,7 +1,11 @@
 /* eslint-disable no-plusplus */
 class ViewGraphics {
   // constructor() {}
-
+  clear(ctx, width, height) {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "#000";
+  }
   DDA(x0, y0, x1, y1) {
     const dx = x1 - x0;
     const dy = y1 - y0;
