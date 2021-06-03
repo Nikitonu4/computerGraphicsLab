@@ -9,6 +9,7 @@ del = require("del");
 function scripts() {
   // работа с js файлами
   return src([
+    "app/js/viewGraphics.js",
     "app/js/main.js", // выбираем основной файл main.js
   ])
     .pipe(concat("main.min.js")) // переименовывем файл в min.js
@@ -71,7 +72,6 @@ exports.watching = watching;
 exports.browsersync = browsersync;
 exports.scripts = scripts;
 exports.cleanDist = cleanDist;
-exports.lintJS = lintJS;
 
 exports.default = parallel(styles, scripts, browsersync, watching); // при запуске gulp
 
