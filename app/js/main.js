@@ -6,23 +6,14 @@ const ctx = canvas.getContext("2d");
 const radioBox = document.querySelector(".control__panel-radiogroup");
 const createRectangle = document.querySelector(".rectangle");
 const clearButton = document.querySelector(".clear");
-
 let nowAlg = 1;
 const viewGraphics = new ViewGraphics(ctx);
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-let isMouseDown = false;
 let Arr = [];
 let startCoordinates = {
   x: 0,
   y: 0,
-};
-
-const rectangleCoordinates = {
-  x0: 0,
-  y0: 0,
-  x1: 0,
-  y1: 0,
 };
 
 let countBezie = 0;
@@ -43,7 +34,6 @@ radioBox.addEventListener("click", () => {
 });
 
 canvas.addEventListener("mousedown", (e) => {
-  isMouseDown = true;
   if (nowAlg == 4) {
     Arr.push({ x: e.clientX, y: e.clientY });
     countBezie++;
@@ -55,7 +45,6 @@ canvas.addEventListener("mousedown", (e) => {
   };
 });
 canvas.addEventListener("mouseup", (e) => {
-  isMouseDown = false;
   switch (nowAlg) {
     case 1:
       viewGraphics.DDA(

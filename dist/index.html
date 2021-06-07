@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторная по компьютерной графике</title>
+  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="control__panel">
+    <div class="control__panel-header">
+      ПОТЯНИ ЗА МЕНЯ
+    </div>
+    <div class="control__panel-radiogroup">
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="dda" checked="checked" value="1">
+        <label for="dda" class="radio-custom-label">DDA</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="lineBrezenhem" value="2">
+        <label for="lineBrezenhem" class="radio-custom-label">Линии Брезенхэма</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="circleBrezenhem" value="3">
+        <label for="circleBrezenhem" class="radio-custom-label">Окружность Брезенхэма</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="bezie" value="4">
+        <label for="bezie" class="radio-custom-label">Кривая Безье</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="koen-saz" value="6">
+        <label for="koen-saz" class="radio-custom-label">Коэн — Сазерленд</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="midpoint" value="7">
+        <label for="midpoint" class="radio-custom-label">Средняя точка</label>
+      </div>
+    </div>
+    <div class="control__panel-buttons">
+      <input class="button hover rectangle" type="button" value="Построить прямоугольник" />
+      <input class="button hover clear" type="button" value="Очистить" />
+    </div>
+
+  </div>
+  <canvas id="canvas"></canvas>
+  <script src="js/main.min.js"></script>
+  <!-- <script src="js/viewGraphics.js"></script> -->
+  <!-- <script src="js/main.js"></script> -->
+</body>
+
+</html>
