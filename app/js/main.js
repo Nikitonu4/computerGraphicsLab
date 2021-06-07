@@ -44,29 +44,18 @@ radioBox.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", (e) => {
   isMouseDown = true;
-  // Arr = [];
   if (nowAlg == 4) {
     Arr.push({ x: e.clientX, y: e.clientY });
     countBezie++;
-  }
-
-  if (nowAlg == 5) {
-    rectangleCoordinates.x0 = e.clientX;
-    rectangleCoordinates.y0 = e.clientY;
   }
 
   startCoordinates = {
     x: e.clientX,
     y: e.clientY,
   };
-  // Arr.push(startCoordinates);
 });
 canvas.addEventListener("mouseup", (e) => {
   isMouseDown = false;
-  if (nowAlg == 5) {
-    rectangleCoordinates.x1 = e.clientX;
-    rectangleCoordinates.y1 = e.clientY;
-  }
   switch (nowAlg) {
     case 1:
       viewGraphics.DDA(
@@ -99,16 +88,33 @@ canvas.addEventListener("mouseup", (e) => {
         Arr = [];
       }
       break;
-    case 5:
-      viewGraphics.createRectangle(rectangleCoordinates);
+    case 5: // создаем прямоугольник для отсечения отрезков
+      viewGraphics.createRectangle(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
+      break;
+    case 6:
+      viewGraphics.koenSaz(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
+      break;
+    case 7:
+      viewGraphics.midPoint(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
       break;
   }
 
   ctx.beginPath(); // сбрасываем path
-});
-
-canvas.addEventListener("mousemove", (e) => {
-  // if (isMouseDown) Arr.push({ x: e.clientX, y: e.clientY });
 });
 
 // обработка перемещения панели управления
