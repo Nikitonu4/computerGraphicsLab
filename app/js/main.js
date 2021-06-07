@@ -3,7 +3,12 @@
 const controlPanel = document.querySelector(".control__panel");
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-const viewGraphics = new ViewGraphics();
+const radioBox = document.querySelector(".control__panel-radiogroup");
+const createRectangle = document.querySelector(".rectangle");
+const clearButton = document.querySelector(".clear");
+
+let nowAlg = 1;
+const viewGraphics = new ViewGraphics(ctx);
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let isMouseDown = false;
@@ -13,40 +18,97 @@ let startCoordinates = {
   y: 0,
 };
 
+const rectangleCoordinates = {
+  x0: 0,
+  y0: 0,
+  x1: 0,
+  y1: 0,
+};
+
+let countBezie = 0;
+
+function selectAnAlgorithm() {
+  nowAlg = +document.querySelector("input[name=radio-cust]:checked").value;
+}
+clearButton.addEventListener("click", () => {
+  viewGraphics.clear();
+});
+
+createRectangle.addEventListener("click", () => {
+  nowAlg = 5;
+});
+
+radioBox.addEventListener("click", () => {
+  selectAnAlgorithm();
+});
+
 canvas.addEventListener("mousedown", (e) => {
   isMouseDown = true;
-  Arr = [];
+  // Arr = [];
+  if (nowAlg == 4) {
+    Arr.push({ x: e.clientX, y: e.clientY });
+    countBezie++;
+  }
+
+  if (nowAlg == 5) {
+    rectangleCoordinates.x0 = e.clientX;
+    rectangleCoordinates.y0 = e.clientY;
+  }
 
   startCoordinates = {
     x: e.clientX,
     y: e.clientY,
   };
-  Arr.push(startCoordinates);
+  // Arr.push(startCoordinates);
 });
 canvas.addEventListener("mouseup", (e) => {
   isMouseDown = false;
-  // viewGraphics.DDA(startCoordinates.x, startCoordinates.y, e.clientX, e.clientY);
-  viewGraphics.brezenhem(
-    startCoordinates.x,
-    startCoordinates.y,
-    e.clientX,
-    e.clientY
-  );
-  console.log(startCoordinates);
-  const R = Math.sqrt(
-    Math.pow(e.clientX - startCoordinates.x, 2) +
-      Math.pow(e.clientY - startCoordinates.y, 2)
-  );
+  if (nowAlg == 5) {
+    rectangleCoordinates.x1 = e.clientX;
+    rectangleCoordinates.y1 = e.clientY;
+  }
+  switch (nowAlg) {
+    case 1:
+      viewGraphics.DDA(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
+      break;
+    case 2:
+      viewGraphics.brezenhem(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
+      break;
+    case 3:
+      const R = Math.sqrt(
+        Math.pow(e.clientX - startCoordinates.x, 2) +
+          Math.pow(e.clientY - startCoordinates.y, 2)
+      );
 
-  // viewGraphics.circleBrezenhem(startCoordinates.x, startCoordinates.y, R);
-
-  // viewGraphics.bezie();
+      viewGraphics.circleBrezenhem(startCoordinates.x, startCoordinates.y, R);
+      break;
+    case 4:
+      if (countBezie == 3) {
+        viewGraphics.bezie(Arr);
+        countBezie = 0;
+        Arr = [];
+      }
+      break;
+    case 5:
+      viewGraphics.createRectangle(rectangleCoordinates);
+      break;
+  }
 
   ctx.beginPath(); // сбрасываем path
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if (isMouseDown) Arr.push({ x: e.clientX, y: e.clientY });
+  // if (isMouseDown) Arr.push({ x: e.clientX, y: e.clientY });
 });
 
 // обработка перемещения панели управления

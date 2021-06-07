@@ -29,8 +29,12 @@
         <label for="circleBrezenhem" class="radio-custom-label">Окружность Брезенхэма</label>
       </div>
       <div>
-        <input type="radio" name="radio-cust" class="radio-custom" id="sazerlendCoen" value="4">
-        <label for="sazerlendCoen" class="radio-custom-label">Сазерленд-Коэн</label>
+        <input type="radio" name="radio-cust" class="radio-custom" id="bezie" value="4">
+        <label for="bezie" class="radio-custom-label">Кривая Безье</label>
+      </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="saz-koen" value="4">
+        <label for="saz-koen" class="radio-custom-label">Сазерленд-Коэн</label>
       </div>
       <!-- <div>
         <input type="radio" name="radio-cust" class="radio-custom" id="belousov" checked="checked" value="1">
@@ -45,6 +49,8 @@
         <label for="belousov" class="radio-custom-label">Реакция Белоусова-Жаботинского</label>
       </div> -->
     </div>
+    <input class="button hover rectangle" type="button" value="Построить прямоугольник" />
+    <input class="button hover clear" type="button" value="Очистить" />
   </div>
   <canvas id="canvas"></canvas>
   <script src="js/main.min.js"></script>

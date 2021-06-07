@@ -1,10 +1,16 @@
+/* eslint-disable no-restricted-properties */
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-plusplus */
 class ViewGraphics {
-  // constructor() {}
-  clear(ctx, width, height) {
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "#000";
+  constructor(ctx) {
+    this.ctx = ctx;
+  }
+  clear() {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    this.ctx.fillStyle = "#fff";
+    this.ctx.fillRect(0, 0, width, height);
+    this.ctx.fillStyle = "#000";
   }
   DDA(x0, y0, x1, y1) {
     const dx = x1 - x0;
@@ -83,13 +89,13 @@ class ViewGraphics {
   // вычисления полинома Бернштейна
   polBershtein(i, n, t) {
     return (
-      (this.factorial(n) / (fthis.actorial(i) * this.factorial(n - i))) *
+      (this.factorial(n) / (this.factorial(i) * this.factorial(n - i))) *
       Math.pow(t, i) *
       Math.pow(1 - t, n - i)
     );
   }
 
-  bezie() {
+  bezie(Arr) {
     let j = 0;
     // Возьмем шаг 0.001 для большей точности
     const step = 0.001;
@@ -99,8 +105,8 @@ class ViewGraphics {
       let ytmp = 0;
       let xtmp = 0;
       // проходим по каждой точке
-      for (let i = 0; i < Arr.length; i++) {
-        const b = this.polBershtein(i, Arr.length - 1, t); // вычисляем наш полином Бернштейна
+      for (let i = 0; i < 3; i++) {
+        const b = this.polBershtein(i, Arr.length - 1, t); // вычисляем наш полином Бернштейна для 3 точек
         xtmp += Arr[i].x * b; // записываем и прибавляем результат
         ytmp += Arr[i].y * b;
       }
@@ -113,7 +119,17 @@ class ViewGraphics {
     } // Рисуем полученную кривую Безье
   }
 
+  createRectangle(rectangleCoordinates) {
+    this.ctx.strokeStyle = "#000";
+    this.ctx.strokeRect(
+      rectangleCoordinates.x0,
+      rectangleCoordinates.y0,
+      rectangleCoordinates.x1 - rectangleCoordinates.x0,
+      rectangleCoordinates.y1 - rectangleCoordinates.y0
+    );
+  }
+
   fillPixel(x, y) {
-    ctx.fillRect(x, y, 2, 2);
+    this.ctx.fillRect(x, y, 1, 1);
   }
 }

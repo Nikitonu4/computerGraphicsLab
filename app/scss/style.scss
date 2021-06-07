@@ -16,7 +16,7 @@
     border: 1px solid rgb(73, 213, 209); /* Параметры границы */
     box-shadow: 6px 6px 11px -5px rgba(36, 35, 20, 0.64);
     border-radius: 30px;
-    background: rgb(158, 244, 241); /* Цвет фона */
+    background: rgb(86, 174, 219); /* Цвет фона */
     padding: 10px; /* Поля вокруг текста */
     &-header {
       text-align: center;
@@ -60,11 +60,33 @@
         top: calc(50% - 9px);
         left: 6px;
         top: 6px;
-        background: #ded52c;
+        background: #e1da4b;
         border-radius: 50%;
       }
       .radio-custom:checked + .radio-custom-label:before {
         border: 2px solid #e9eaec;
+      }
+    }
+    input.button {
+      margin-bottom: 10px;
+      outline: none;
+      width: 250px;
+      text-transform: uppercase;
+      font-size: 14px;
+      text-align: center;
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      background: #edebe1;
+      color: rgb(0, 0, 0);
+      position: relative;
+      transition: 0.2s ease;
+      &:hover {
+        top: 3px;
+        background: #d4d0cd;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        transition: 0.3s ease;
       }
     }
   }
