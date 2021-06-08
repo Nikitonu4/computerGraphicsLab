@@ -11,8 +11,8 @@ class ViewGraphics {
     this.TOP = 8;
   }
   clear() {
-    const width = ctx.canvas.width;
-    const height = ctx.canvas.height;
+    const width = this.ctx.canvas.width;
+    const height = this.ctx.canvas.height;
     this.ctx.fillStyle = "#fff";
     this.ctx.fillRect(0, 0, width, height);
     this.ctx.fillStyle = "#000";
@@ -100,17 +100,15 @@ class ViewGraphics {
 
   bezie(Arr) {
     let j = 0;
-    // Возьмем шаг 0.001 для большей точности
     const step = 0.001;
 
-    const result = []; // Конечный массив точек кривой
+    const result = [];
     for (let t = 0; t < 1; t += step) {
       let ytmp = 0;
       let xtmp = 0;
       for (let i = 0; i < 3; i++) {
-        // проходим по каждой точке
-        const b = this.polBershtein(i, Arr.length - 1, t); // вычисляем полином Бернштейна для 3 точек
-        xtmp += Arr[i].x * b; // записываем и прибавляем результат
+        const b = this.polBershtein(i, Arr.length - 1, t); // полином Бернштейна для 3 точек
+        xtmp += Arr[i].x * b;
         ytmp += Arr[i].y * b;
       }
 
@@ -118,7 +116,7 @@ class ViewGraphics {
       j++;
     }
     for (let i = 0; i < result.length; i++) {
-      this.fillPixel(result[i].x, result[i].y); // Рисуем полученную кривую Безье
+      this.fillPixel(result[i].x, result[i].y);
     }
   }
 
