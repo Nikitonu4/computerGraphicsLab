@@ -5,7 +5,14 @@ const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const radioBox = document.querySelector(".control__panel-radiogroup");
 const createRectangle = document.querySelector(".rectangle");
+const createPolygon = document.querySelector(".polygon");
 const clearButton = document.querySelector(".clear");
+const countDots = document.querySelector(".count-dots");
+const notIntEnds = document.querySelector(".notIntEnds");
+
+let countDotsPolygon = 5;
+let nowCountDotsPolygon = 0;
+let arrayForPolygon = [];
 let nowAlg = 1;
 const viewGraphics = new ViewGraphics(ctx);
 canvas.width = window.innerWidth;
@@ -29,14 +36,34 @@ createRectangle.addEventListener("click", () => {
   nowAlg = 5;
 });
 
+createPolygon.addEventListener("click", () => {
+  countDotsPolygon = countDots.value;
+  nowCountDotsPolygon = 0;
+  nowAlg = 9;
+});
+
 radioBox.addEventListener("click", () => {
   selectAnAlgorithm();
+});
+
+notIntEnds.addEventListener("click", () => {
+  viewGraphics.notIntEnds(
+    document.querySelector(".startX").value,
+    document.querySelector(".startY").value,
+    document.querySelector(".endX").value,
+    document.querySelector(".endY").value
+  );
 });
 
 canvas.addEventListener("mousedown", (e) => {
   if (nowAlg == 4) {
     Arr.push({ x: e.clientX, y: e.clientY });
     countBezie++;
+  }
+
+  if (nowAlg == 9) {
+    arrayForPolygon.push({ x: e.clientX, y: e.clientY });
+    nowCountDotsPolygon++;
   }
 
   startCoordinates = {
@@ -47,6 +74,7 @@ canvas.addEventListener("mousedown", (e) => {
 canvas.addEventListener("mouseup", (e) => {
   switch (nowAlg) {
     case 1:
+      console.log(startCoordinates.x);
       viewGraphics.DDA(
         startCoordinates.x,
         startCoordinates.y,
@@ -100,6 +128,22 @@ canvas.addEventListener("mouseup", (e) => {
         e.clientX,
         e.clientY
       );
+      break;
+    case 8:
+      viewGraphics.cyrusBeck(
+        startCoordinates.x,
+        startCoordinates.y,
+        e.clientX,
+        e.clientY
+      );
+      break;
+    case 9:
+      if (countDotsPolygon == nowCountDotsPolygon) {
+        viewGraphics.coordinatesPolygon = arrayForPolygon;
+        viewGraphics.penPolygon();
+        arrayForPolygon = [];
+        nowCountDotsPolygon = 0;
+      }
       break;
   }
 

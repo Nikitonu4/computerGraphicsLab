@@ -5,6 +5,7 @@ class ViewGraphics {
   constructor(ctx) {
     this.ctx = ctx;
     this.coordinatesRectangle = {}; // координаты последнего нарисованного прямоугольника
+    this.coordinatesPolygon = []; // координаты последнего нарисованного многоугольника
     this.LEFT = 1;
     this.RIGHT = 2;
     this.BOTTOM = 4;
@@ -51,6 +52,48 @@ class ViewGraphics {
       if (error2 < deltaX) {
         error += deltaX;
         y0 += signY;
+      }
+    }
+  }
+
+  notIntEnds(x0, y0, x1, y1) {
+    let x = 0;
+    let y = 0;
+    let a = Math.round(y1 - y0);
+    let b = Math.round(x1 - x0);
+    let x_mnoj = 1,
+      y_mnoj = 1;
+    if (a < 0) {
+      a = -a;
+      x_mnoj = -1;
+    }
+    if (b < 0) {
+      b = -b;
+      y_mnoj = -1;
+    }
+    let c = 1000;
+    let dh = c / Math.abs(y1 - y0);
+    let h = 0.0;
+    let dv = c / Math.abs(x1 - x0);
+    // double v = dv * (1 - p_begin_double.Value);
+    let v = 0.0;
+    while (h < c && v < c) {
+      this.fillPixel(x * x_mnoj + Math.round(y0), y * y_mnoj + Math.round(x0));
+      if (h < v) {
+        x++;
+        h += dh;
+      } else if (h > v) {
+        y++;
+        v += dv;
+      } else {
+        this.fillPixel(
+          x * x_mnoj + Math.round(y0),
+          (y + 1) * y_mnoj + Math.round(x0)
+        );
+        x++;
+        y++;
+        h += dh;
+        v += dv;
       }
     }
   }
@@ -209,6 +252,7 @@ class ViewGraphics {
       this.coordinatesRectangle.y1 >= y
     );
   }
+
   midPoint(x0, y0, x1, y1) {
     if (Math.abs(x0 - x1) <= 1 && Math.abs(y0 - y1) <= 1) return;
     if (this.isInside(x0, y0) && this.isInside(x1, y1)) {
@@ -223,6 +267,94 @@ class ViewGraphics {
 
     this.midPoint(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
     this.midPoint((x0 + x1) / 2, (y0 + y1) / 2, x1, y1);
+  }
+
+  dotProduct(p1, p2) {
+    let res = 0;
+
+    for (let i = 0; i < 2; i++) {
+      res += p1[i] * p2[i];
+    }
+
+    return res;
+  }
+
+  penPolygon() {
+    for (let i = 0; i < this.coordinatesPolygon.length - 1; i += 1) {
+      const x0 = this.coordinatesPolygon[i].x;
+      const y0 = this.coordinatesPolygon[i].y;
+      const x1 = this.coordinatesPolygon[i + 1].x;
+      const y1 = this.coordinatesPolygon[i + 1].y;
+      this.DDA(x0, y0, x1, y1);
+    }
+    const lenArray = this.coordinatesPolygon.length;
+    this.DDA(
+      this.coordinatesPolygon[lenArray - 1].x,
+      this.coordinatesPolygon[lenArray - 1].y,
+      this.coordinatesPolygon[0].x,
+      this.coordinatesPolygon[0].y
+    );
+  }
+  cyrusBeck(x1, y1, x2, y2) {
+    var k = this.coordinatesPolygon.length;
+    var d = [x2 - x1, y2 - y1];
+    var f = this.coordinatesPolygon;
+    let px, py, px1, py1;
+    var normals = [];
+    var w;
+    var n = this.coordinatesPolygon.length;
+    var tl = 0;
+    var tu = 1;
+    var Ddotn, Wdotn, t;
+
+    //finding normals
+    for (let i = 0; i < n; i++) {
+      normals.push([
+        this.coordinatesPolygon[i % n].y -
+          this.coordinatesPolygon[(i + 1) % n].y,
+        [
+          this.coordinatesPolygon[(i + 1) % n].x -
+            this.coordinatesPolygon[i % n].x,
+        ],
+      ]);
+    }
+
+    for (let i = 0; i < k; i++) {
+      w = [x1 - f[i].x, y1 - f[i].y];
+
+      Ddotn = this.dotProduct(d, normals[i]);
+      Wdotn = this.dotProduct(w, normals[i]);
+
+      if (Ddotn !== 0) {
+        t = -Wdotn / Ddotn;
+
+        if (Ddotn > 0) {
+          if (t > 1) {
+            return;
+          } else {
+            tl = Math.max(t, tl);
+          }
+        } else {
+          if (t < 0) {
+            return;
+          } else {
+            tu = Math.min(t, tu);
+          }
+        }
+      } else {
+        if (Wdotn < 0) {
+          return;
+        }
+      }
+    }
+    if (tl <= tu) {
+      px = x1 + (x2 - x1) * tl;
+      py = y1 + (y2 - y1) * tl;
+      px1 = x1 + (x2 - x1) * tu;
+      py1 = y1 + (y2 - y1) * tu;
+    }
+    console.log({ px, py, px1, py1 });
+    this.DDA(Math.floor(px), Math.floor(py), Math.floor(px1), Math.floor(py1));
   }
 
   fillPixel(x, y) {

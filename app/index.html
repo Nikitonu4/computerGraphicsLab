@@ -40,15 +40,54 @@
         <input type="radio" name="radio-cust" class="radio-custom" id="midpoint" value="7">
         <label for="midpoint" class="radio-custom-label">Средняя точка</label>
       </div>
+      <div>
+        <input type="radio" name="radio-cust" class="radio-custom" id="cyrus-beck" value="8">
+        <label for="cyrus-beck" class="radio-custom-label">Кирус — Бек</label>
+      </div>
+    </div>
+    <div class="notInt">
+      <div class="start-dot">
+        <div class="control__panel-input dots">
+          <p>Начало X:</p>
+          <input class="input-form startY" value=401.5 placeholder="401.5" type="number" step="0.1" min="1"
+            max="1000" />
+        </div>
+        <div class="control__panel-input dots">
+          <p>Начало Y:</p>
+          <input class="input-form startX" value=342.3 type="number" step="0.1" min="1" max="1000" />
+        </div>
+
+      </div>
+      <div class="end-dot">
+        <div class="control__panel-input dots">
+          <p>Конец X:</p>
+          <input class="input-form endY" value=615.7 type="number" step="0.1" min="1" max="1000" />
+        </div>
+        <div class="control__panel-input dots">
+          <p>Конец Y:</p>
+          <input class="input-form endX" value=503.2 type="number" step="0.1" min="1" max="1000" />
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="control__panel-input">
+      <p>Кол-во точек многоугольника:</p>
+      <input class="input-form count-dots" value=5 placeholder="5" type="number" step="1" min="1" max="10" />
     </div>
     <div class="control__panel-buttons">
+      <input class="button hover notIntEnds" type="button" value="Нецелые концы" />
       <input class="button hover rectangle" type="button" value="Построить прямоугольник" />
+      <input class="button hover polygon" type="button" value="Построить многоугольник" />
       <input class="button hover clear" type="button" value="Очистить" />
     </div>
 
   </div>
   <canvas id="canvas"></canvas>
   <script src="js/main.min.js"></script>
+  <!-- <script src="js/viewGraphics.js"></script>
+  <script src="js/main.js"></script> -->
 </body>
 
 </html>

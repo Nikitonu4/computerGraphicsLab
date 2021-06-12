@@ -3,6 +3,7 @@
 #canvas {
   cursor: crosshair;
 }
+
 .control {
   color: rgb(37, 38, 32);
 
@@ -12,7 +13,7 @@
     top: 1%;
     z-index: 10;
     width: 400px;
-    height: 450px;
+    height: 900px;
     border: 1px solid rgb(73, 213, 209); /* Параметры границы */
     box-shadow: 6px 6px 11px -5px rgba(36, 35, 20, 0.64);
     border-radius: 30px;
@@ -22,6 +23,24 @@
       text-align: center;
       padding: 10px;
       cursor: move;
+    }
+    .input-form {
+      margin: 14px 0;
+      height: 50px;
+      border: 2px solid #d1d3d4;
+      width: 50%;
+      padding: 12px;
+      border-radius: 20px;
+      &:focus,
+      &.active {
+        outline: none;
+        border-color: #3498db;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background: #d1d3d4;
+        opacity: 0.6;
+      }
     }
     &-radiogroup {
       /*Radiobutton*/
@@ -95,5 +114,14 @@
         }
       }
     }
+  }
+}
+
+.notInt {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .input-form {
+    width: 100px;
   }
 }
