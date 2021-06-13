@@ -61,15 +61,15 @@ class ViewGraphics {
     let y = 0;
     let a = Math.round(y1 - y0);
     let b = Math.round(x1 - x0);
-    let x_mnoj = 1,
-      y_mnoj = 1;
+    let xFactor = 1,
+      yFactor = 1;
     if (a < 0) {
       a = -a;
-      x_mnoj = -1;
+      xFactor = -1;
     }
     if (b < 0) {
       b = -b;
-      y_mnoj = -1;
+      yFactor = -1;
     }
     let c = 1000;
     let dh = c / Math.abs(y1 - y0);
@@ -78,7 +78,10 @@ class ViewGraphics {
     // double v = dv * (1 - p_begin_double.Value);
     let v = 0.0;
     while (h < c && v < c) {
-      this.fillPixel(x * x_mnoj + Math.round(y0), y * y_mnoj + Math.round(x0));
+      this.fillPixel(
+        x * xFactor + Math.round(y0),
+        y * yFactor + Math.round(x0)
+      );
       if (h < v) {
         x++;
         h += dh;
@@ -87,8 +90,8 @@ class ViewGraphics {
         v += dv;
       } else {
         this.fillPixel(
-          x * x_mnoj + Math.round(y0),
-          (y + 1) * y_mnoj + Math.round(x0)
+          x * xFactor + Math.round(y0),
+          (y + 1) * yFactor + Math.round(x0)
         );
         x++;
         y++;
