@@ -75,7 +75,6 @@ class ViewGraphics {
     let dh = c / Math.abs(y1 - y0);
     let h = 0.0;
     let dv = c / Math.abs(x1 - x0);
-    // double v = dv * (1 - p_begin_double.Value);
     let v = 0.0;
     while (h < c && v < c) {
       this.fillPixel(
@@ -299,18 +298,17 @@ class ViewGraphics {
     );
   }
   cyrusBeck(x1, y1, x2, y2) {
-    var k = this.coordinatesPolygon.length;
-    var d = [x2 - x1, y2 - y1];
-    var f = this.coordinatesPolygon;
+    let k = this.coordinatesPolygon.length;
+    let d = [x2 - x1, y2 - y1];
+    let f = this.coordinatesPolygon;
     let px, py, px1, py1;
-    var normals = [];
-    var w;
-    var n = this.coordinatesPolygon.length;
-    var tl = 0;
-    var tu = 1;
-    var Ddotn, Wdotn, t;
+    let normals = [];
+    let w;
+    let n = this.coordinatesPolygon.length;
+    let tl = 0;
+    let tu = 1;
+    let Ddotn, Wdotn, t;
 
-    //finding normals
     for (let i = 0; i < n; i++) {
       normals.push([
         this.coordinatesPolygon[i % n].y -
@@ -356,7 +354,6 @@ class ViewGraphics {
       px1 = x1 + (x2 - x1) * tu;
       py1 = y1 + (y2 - y1) * tu;
     }
-    console.log({ px, py, px1, py1 });
     this.DDA(Math.floor(px), Math.floor(py), Math.floor(px1), Math.floor(py1));
   }
 
